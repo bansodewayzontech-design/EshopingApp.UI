@@ -1,0 +1,58 @@
+<app-storefront-header />
+<main class="min-h-screen bg-[#fffdfa]">
+  <section class="relative overflow-hidden bg-[#542636] px-5 py-12 text-white sm:px-8 sm:py-16 lg:py-20">
+    <div class="absolute inset-y-0 right-0 hidden w-1/2 bg-cover bg-center opacity-40 lg:block" style="background-image:url('https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1400&q=82')"></div>
+    <div class="relative mx-auto max-w-7xl">
+      <p class="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f0c178]"><app-icon name="sparkles" [size]="15" /> The occasion edit</p>
+      <h1 class="mt-4 max-w-2xl font-display text-4xl leading-tight sm:text-5xl lg:text-6xl">A little more lovely, for a little less.</h1>
+      <p class="mt-4 max-w-xl text-sm leading-6 text-white/75">Thoughtful sarees, special prices. Find your next celebration look before the edit changes.</p>
+      <a href="#offers" class="mt-7 inline-flex min-h-12 items-center gap-3 bg-[#f0c178] px-5 text-xs font-bold uppercase tracking-[0.12em] text-[#351d20] transition hover:bg-[#ffdda0]">Shop the offers <app-icon name="arrow-right" [size]="16" /></a>
+    </div>
+  </section>
+
+  <section class="border-b border-[#eee5df] bg-[#fbf6f0] px-5 py-5 sm:px-8">
+    <div class="mx-auto flex max-w-7xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-[10px] font-semibold uppercase tracking-[0.17em] text-[#8d5b50]">Limited time offers</p>
+        <p class="mt-1 text-sm text-[#514642]">Today’s edit ends in</p>
+      </div>
+      <div class="flex items-center gap-2" role="timer" aria-label="Time remaining today">
+        @for (unit of countdown().split(':'); track $index) {
+          <span class="min-w-12 bg-white px-3 py-2 text-center font-mono text-lg font-semibold text-[#542636] shadow-sm">{{ unit }}</span>
+          @if ($index < 2) { <span class="text-[#8d5b50]">:</span> }
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="offers" class="scroll-mt-24 px-5 py-12 sm:px-8 sm:py-16" aria-labelledby="offers-title">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="eyebrow">A good time to find your favourite</p>
+          <h2 id="offers-title" class="section-title">Special deals</h2>
+          <p class="mt-2 text-sm text-[#786a64]">{{ offers().length }} pieces in today’s edit</p>
+        </div>
+        <div class="flex flex-wrap gap-2" aria-label="Filter by minimum discount">
+          <button type="button" (click)="setDiscount(0)" [attr.aria-pressed]="discountFilter() === 0" class="min-h-10 border px-4 text-xs font-semibold transition" [class.border-[#6f1d35]]="discountFilter() === 0" [class.bg-[#6f1d35]]="discountFilter() === 0" [class.text-white]="discountFilter() === 0" [class.border-[#d9c9c1]]="discountFilter() !== 0">All deals</button>
+          @for (group of offerGroups; track group.minimum) {
+            <button type="button" (click)="setDiscount(group.minimum)" [attr.aria-pressed]="discountFilter() === group.minimum" class="min-h-10 border border-[#d9c9c1] px-4 text-xs font-semibold text-[#542636] transition hover:border-[#6f1d35]" [class.bg-[#6f1d35]]="discountFilter() === group.minimum" [class.text-white]="discountFilter() === group.minimum">{{ group.label }}+</button>
+          }
+        </div>
+      </div>
+
+      @if (offers().length) {
+        <div class="mt-8 grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-5 sm:gap-y-12 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
+          @for (product of offers(); track product.id) {
+            <app-product-card [product]="product" (quickView)="onQuickView($event)" />
+          }
+        </div>
+      } @else {
+        <div class="mt-8 grid min-h-64 place-items-center border border-dashed border-[#d9c9c1] bg-[#fbf8f4] p-8 text-center">
+          <div><h3 class="font-display text-2xl text-[#302927]">No offers at this discount right now</h3><p class="mt-2 text-sm text-[#786a64]">Try another discount or view all current deals.</p><button type="button" (click)="setDiscount(0)" class="mt-4 bg-[#6f1d35] px-5 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-white">View all deals</button></div>
+        </div>
+      }
+    </div>
+  </section>
+</main>
+<app-storefront-footer />

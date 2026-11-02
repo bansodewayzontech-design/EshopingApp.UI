@@ -1,0 +1,45 @@
+<app-storefront-header />
+<main class="min-h-screen bg-[#fffdfa] px-5 py-8 sm:px-8 sm:py-12">
+  <div class="mx-auto max-w-5xl">
+    <p class="eyebrow">A record of lovely things</p>
+    <h1 class="section-title">My orders</h1>
+    <p class="mt-2 text-sm text-[#786a64]">Demo orders are saved only in this browser.</p>
+    @if (feedback()) { <p class="mt-4 text-xs text-[#6f1d35]" role="status">{{ feedback() }}</p> }
+
+    @if (orders.sortedOrders().length) {
+      <div class="mt-7 space-y-4">
+        @for (order of orders.sortedOrders(); track order.id) {
+          <article class="border border-[#eee5df] bg-white p-4 sm:p-5">
+            <div class="flex flex-wrap items-start justify-between gap-3 border-b border-[#eee5df] pb-4">
+              <div><p class="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#8c7770]">Order {{ order.id }}</p><p class="mt-1 text-xs text-[#514642]">{{ order.createdAt | date:'mediumDate' }}</p></div>
+              <div class="flex flex-wrap gap-2"><span class="border border-[#d9c9c1] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#542636]">{{ order.status }}</span><span class="bg-[#fbf6f0] px-2.5 py-1 text-[10px] text-[#786a64]">{{ order.paymentStatus }}</span></div>
+            </div>
+            <div class="mt-4 space-y-3">
+              @for (line of order.items; track line.product.id) {
+                <div class="flex items-center gap-3"><img [src]="line.product.image" [alt]="''" class="h-16 w-12 object-cover" /><div class="min-w-0 flex-1"><p class="line-clamp-2 text-xs font-semibold text-[#302927]">{{ line.product.name }}</p><p class="mt-1 text-[10px] text-[#8c7770]">Qty {{ line.quantity }}</p></div><span class="shrink-0 text-xs font-semibold">{{ line.product.price * line.quantity | currency:'INR':'symbol':'1.0-0' }}</span></div>
+              }
+            </div>
+            <div class="mt-4 flex flex-wrap items-end justify-between gap-3 border-t border-[#eee5df] pt-4">
+              <div class="text-[10px] leading-5 text-[#786a64]"><p>Delivering to {{ order.address.fullName }} · {{ order.address.postalCode }}</p><p>{{ order.address.city }}, {{ order.address.state }} · {{ order.paymentMethod | uppercase }}</p></div>
+              <div class="flex flex-wrap items-center gap-4"><p class="text-xs font-bold text-[#302927]">Total {{ order.total | currency:'INR':'symbol':'1.0-0' }}</p><button type="button" (click)="toggleTracking(order.id)" [attr.aria-expanded]="trackingOrderId() === order.id" class="text-[10px] font-semibold uppercase tracking-wide text-[#6f1d35] hover:underline">{{ trackingOrderId() === order.id ? 'Hide tracking' : 'Track order' }}</button>@if (order.status === 'Placed' || order.status === 'Processing') { <button type="button" (click)="cancelOrder(order.id)" class="text-[10px] font-semibold uppercase tracking-wide text-[#8d3348] hover:underline">Cancel order</button> }</div>
+            </div>
+            @if (trackingOrderId() === order.id) {
+              <div class="mt-4 border-t border-[#eee5df] pt-4" aria-label="Order tracking status">
+                <ol class="grid grid-cols-4 gap-2 text-center text-[9px] font-semibold uppercase tracking-wide text-[#786a64]">
+                  <li class="text-[#6f1d35]"><span class="mx-auto mb-2 block h-2.5 w-2.5 rounded-full bg-[#6f1d35]"></span>Placed</li>
+                  <li [class.text-[#6f1d35]]="order.status !== 'Placed' && order.status !== 'Cancelled'"><span class="mx-auto mb-2 block h-2.5 w-2.5 rounded-full" [class.bg-[#6f1d35]]="order.status !== 'Placed' && order.status !== 'Cancelled'" [class.bg-[#d9c9c1]]="order.status === 'Placed' || order.status === 'Cancelled'"></span>Processing</li>
+                  <li [class.text-[#6f1d35]]="order.status === 'Shipped' || order.status === 'Delivered'"><span class="mx-auto mb-2 block h-2.5 w-2.5 rounded-full" [class.bg-[#6f1d35]]="order.status === 'Shipped' || order.status === 'Delivered'" [class.bg-[#d9c9c1]]="order.status !== 'Shipped' && order.status !== 'Delivered'"></span>Shipped</li>
+                  <li [class.text-[#6f1d35]]="order.status === 'Delivered'"><span class="mx-auto mb-2 block h-2.5 w-2.5 rounded-full" [class.bg-[#6f1d35]]="order.status === 'Delivered'" [class.bg-[#d9c9c1]]="order.status !== 'Delivered'"></span>Delivered</li>
+                </ol>
+                @if (order.status === 'Cancelled') { <p class="mt-3 text-center text-xs text-[#8d3348]">This demo order has been cancelled.</p> }
+              </div>
+            }
+          </article>
+        }
+      </div>
+    } @else {
+      <section class="mt-7 grid min-h-[340px] place-items-center border border-dashed border-[#d9c9c1] bg-[#fbf8f4] px-5 py-12 text-center"><div><span class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#f0e5df] text-[#6f1d35]"><app-icon name="bag" [size]="22" /></span><h2 class="mt-4 font-display text-2xl text-[#302927]">Your next order will feel special</h2><p class="mt-2 text-sm text-[#786a64]">Orders you place in this demo will appear here.</p><a routerLink="/products" class="mt-5 inline-flex min-h-11 items-center bg-[#6f1d35] px-5 text-xs font-semibold uppercase tracking-wide text-white">Browse sarees</a></div></section>
+    }
+  </div>
+</main>
+<app-storefront-footer />

@@ -1,0 +1,157 @@
+<div class="storefront-announcement bg-[#4b1f2c] px-4 py-2 text-center text-[10px] font-medium uppercase tracking-[0.17em] text-white sm:text-[11px]">
+  Complimentary delivery on orders over Rs. 2,999 <span class="mx-2 text-[#d3a66d]">|</span> A little celebration in every parcel
+</div>
+<header class="sticky top-0 z-40 border-b border-[#eee5df] bg-[#fffdfa]/95 shadow-[0_3px_15px_rgba(54,34,32,0.04)] backdrop-blur-md">
+  <div class="mx-auto flex min-h-[72px] max-w-[1440px] items-center gap-2 px-3 sm:gap-3 sm:px-6 xl:gap-6 xl:px-8">
+    <a href="#home" class="group flex shrink-0 cursor-pointer items-center space-x-2.5" aria-label="NandiniMart home">
+      <span class="rounded-xl bg-gradient-to-tr from-amber-500 to-orange-600 p-2.5 shadow-md shadow-orange-200 transition-transform duration-200 group-hover:scale-105">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white" class="h-6 w-6" aria-hidden="true" focusable="false">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+        </svg>
+      </span>
+      <span class="flex flex-col">
+        <span class="text-lg font-black leading-tight tracking-tight text-slate-800 transition-colors duration-200 group-hover:text-orange-600 sm:text-xl">Nandini<span class="font-extrabold text-orange-600">Mart</span></span>
+        <span class="-mt-0.5 text-[10px] font-medium uppercase tracking-widest text-slate-400">Your Daily Store</span>
+      </span>
+    </a>
+
+    <nav class="hidden flex-nowrap items-center space-x-6 xl:flex" aria-label="Main navigation">
+      <a href="#home" class="nav-link inline-flex shrink-0 items-center whitespace-nowrap">Home</a>
+      <a routerLink="/products" class="nav-link inline-flex shrink-0 items-center whitespace-nowrap">Shop</a>
+      <a routerLink="/viral-sarees" class="nav-link inline-flex shrink-0 items-center whitespace-nowrap">Viral Sarees</a>
+      <div #categoryPanel class="relative shrink-0">
+        <button
+          type="button"
+          (click)="toggleCategoryMenu()"
+          [attr.aria-expanded]="categoryMenuOpen()"
+          aria-haspopup="true"
+          class="nav-link inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap"
+        >
+          Categories <app-icon name="chevron-down" [size]="14" />
+        </button>
+        @if (categoryMenuOpen()) {
+          <div class="absolute left-0 top-full z-[60] mt-3 max-h-[calc(100vh-7rem)] w-60 overflow-y-auto border border-[#eee5df] bg-white p-2 shadow-xl" role="menu" aria-label="Shop by category">
+            @for (category of categories; track category.title) {
+              <button type="button" role="menuitem" (click)="selectCategory(category.title)" class="flex min-h-11 w-full items-center justify-between px-3 text-left text-sm text-[#514642] transition hover:bg-[#f8f2ed] hover:text-[#6f1d35]">
+                {{ category.title }} <app-icon name="arrow-up-right" [size]="15" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+      <a href="#new-arrivals" class="nav-link inline-flex shrink-0 items-center whitespace-nowrap">New arrivals</a>
+      <a href="#best-sellers" class="nav-link inline-flex shrink-0 items-center whitespace-nowrap">Best sellers</a>
+      <a routerLink="/best-offers" class="nav-link inline-flex shrink-0 items-center whitespace-nowrap text-[#8d3348]">Offers</a>
+    </nav>
+
+    <div #searchPanel class="relative ml-auto hidden min-w-40 flex-1 xl:block xl:max-w-[220px] 2xl:max-w-[270px]">
+      <form role="search" (submit)="submitSearch($event)" class="relative">
+        <label for="store-search" class="sr-only">Search clothing and accessories</label>
+        <app-icon name="search" [size]="17" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#8e7c73]" />
+        <input
+          id="store-search"
+          type="search"
+          [value]="searchQuery()"
+          (input)="onSearch($event)"
+          (focus)="searchOpen.set(true)"
+          autocomplete="off"
+          placeholder="Search the collection"
+          class="h-10 w-full border border-[#e7dcd5] bg-[#fbf8f4] pl-10 pr-10 text-xs text-[#302927] outline-none transition focus:border-[#9b5965] focus:bg-white focus:ring-2 focus:ring-[#9b5965]/15"
+          [attr.aria-expanded]="searchOpen()"
+          aria-controls="desktop-search-suggestions"
+        />
+        @if (searchQuery()) {
+          <button type="button" (click)="clearSearch()" aria-label="Clear search" class="absolute right-2 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center text-[#8e7c73] hover:text-[#6f1d35]">
+            <app-icon name="close" [size]="15" />
+          </button>
+        }
+      </form>
+      @if (searchOpen()) {
+        <div id="desktop-search-suggestions" class="absolute inset-x-0 top-full z-50 mt-2 border border-[#eee5df] bg-white p-2 shadow-xl" role="listbox" aria-label="Suggested products">
+          @if (suggestions().length) {
+            @for (product of suggestions(); track product.id) {
+              <button type="button" role="option" (click)="selectSuggestion(product)" class="flex w-full items-center gap-3 p-2 text-left transition hover:bg-[#f8f2ed]">
+                <img [src]="product.image" [alt]="''" class="h-12 w-10 object-cover" loading="lazy" />
+                <span class="min-w-0 flex-1">
+                  <span class="block truncate text-xs font-medium text-[#302927]">{{ product.name }}</span>
+                  <span class="mt-1 block text-[10px] uppercase tracking-[0.1em] text-[#8e7c73]">{{ product.category }}</span>
+                </span>
+                <app-icon name="arrow-up-right" [size]="15" class="text-[#8e7c73]" />
+              </button>
+            }
+          } @else {
+            <p class="px-3 py-4 text-xs text-[#8e7c73]">No quick matches. Try “saree” or “kurta”.</p>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="ml-auto flex shrink-0 items-center gap-1 sm:gap-2 lg:ml-0">
+      <a [routerLink]="auth.currentUser() ? '/profile' : '/auth/login'" class="hidden min-h-10 items-center gap-2 px-2 text-xs font-medium text-[#514642] transition hover:text-[#6f1d35] xl:inline-flex" [attr.aria-label]="auth.currentUser() ? 'Open your account' : 'Sign in to your account'">
+        <app-icon name="user" [size]="19" /> <span>{{ auth.currentUser() ? 'Account' : 'Sign in' }}</span>
+      </a>
+      <a routerLink="/wishlist" class="relative grid h-9 w-9 place-items-center text-[#514642] transition hover:text-[#6f1d35] sm:h-10 sm:w-10" aria-label="Wishlist">
+        <app-icon name="heart" [size]="20" />
+        @if (state.wishlistCount()) {
+          <span class="absolute right-0 top-0 grid h-[17px] min-w-[17px] place-items-center rounded-full bg-[#6f1d35] px-1 text-[9px] font-semibold text-white">{{ state.wishlistCount() }}</span>
+        }
+      </a>
+      <a routerLink="/cart" class="relative grid h-9 w-9 place-items-center text-[#514642] transition hover:text-[#6f1d35] sm:h-10 sm:w-10" aria-label="Shopping bag">
+        <app-icon name="bag" [size]="20" />
+        @if (state.cartCount()) {
+          <span class="absolute right-0 top-0 grid h-[17px] min-w-[17px] place-items-center rounded-full bg-[#6f1d35] px-1 text-[9px] font-semibold text-white">{{ state.cartCount() }}</span>
+        }
+      </a>
+      <button type="button" (click)="toggleMobileMenu()" class="grid h-9 w-9 place-items-center text-[#514642] xl:hidden sm:h-10 sm:w-10" [attr.aria-expanded]="mobileMenuOpen()" aria-controls="mobile-navigation" [attr.aria-label]="mobileMenuOpen() ? 'Close navigation menu' : 'Open navigation menu'">
+        <app-icon [name]="mobileMenuOpen() ? 'close' : 'menu'" [size]="21" />
+      </button>
+    </div>
+  </div>
+
+  <div #mobileSearchPanel class="border-t border-[#eee5df] px-4 py-2.5 xl:hidden">
+    <div class="relative">
+      <form role="search" (submit)="submitSearch($event)" class="relative">
+        <label for="mobile-store-search" class="sr-only">Search clothing and accessories</label>
+        <app-icon name="search" [size]="17" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#8e7c73]" />
+        <input id="mobile-store-search" type="search" [value]="searchQuery()" (input)="onSearch($event)" (focus)="searchOpen.set(true)" autocomplete="off" placeholder="Search the collection" class="h-10 w-full border border-[#e7dcd5] bg-[#fbf8f4] pl-10 pr-10 text-xs outline-none focus:border-[#9b5965] focus:bg-white" [attr.aria-expanded]="searchOpen()" aria-controls="mobile-search-suggestions" />
+        @if (searchQuery()) {
+          <button type="button" (click)="clearSearch()" aria-label="Clear search" class="absolute right-2 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center text-[#8e7c73]"><app-icon name="close" [size]="15" /></button>
+        }
+      </form>
+      @if (searchOpen()) {
+        <div id="mobile-search-suggestions" class="absolute inset-x-0 top-full z-50 mt-2 border border-[#eee5df] bg-white p-2 shadow-xl" role="listbox" aria-label="Suggested products">
+          @if (suggestions().length) {
+            @for (product of suggestions(); track product.id) {
+              <button type="button" role="option" (click)="selectSuggestion(product)" class="flex w-full items-center gap-3 p-2 text-left hover:bg-[#f8f2ed]">
+                <img [src]="product.image" alt="" class="h-12 w-10 object-cover" loading="lazy" />
+                <span class="min-w-0 flex-1"><span class="block truncate text-xs font-medium">{{ product.name }}</span><span class="text-[10px] uppercase tracking-[0.1em] text-[#8e7c73]">{{ product.category }}</span></span>
+              </button>
+            }
+          } @else { <p class="px-3 py-4 text-xs text-[#8e7c73]">No quick matches. Try “saree” or “kurta”.</p> }
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (mobileMenuOpen()) {
+    <nav id="mobile-navigation" class="grid gap-1 border-t border-[#eee5df] bg-white px-5 py-4 xl:hidden" aria-label="Mobile navigation">
+      <a href="#home" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link">Home</a>
+      <a routerLink="/products" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link">Shop all</a>
+      <a routerLink="/viral-sarees" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link">Viral Sarees</a>
+      <a href="#categories" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link">Categories</a>
+      <a href="#new-arrivals" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link">New arrivals</a>
+      <a href="#best-sellers" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link">Best sellers</a>
+      <a routerLink="/best-offers" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link text-[#8d3348]">Offers</a>
+      <a routerLink="/wishlist" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link">Wishlist ({{ state.wishlistCount() }})</a>
+      <a routerLink="/cart" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link">Shopping bag ({{ state.cartCount() }})</a>
+      <a [routerLink]="auth.currentUser() ? '/profile' : '/auth/login'" (click)="mobileMenuOpen.set(false)" class="mobile-nav-link flex items-center gap-2"><app-icon name="user" [size]="17" /> {{ auth.currentUser() ? 'Account' : 'Sign in' }}</a>
+    </nav>
+  }
+</header>
+<nav class="mobile-bottom-nav fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-[#e8dcd5] bg-[#fffdfa]/95 px-1 pt-2 shadow-[0_-4px_16px_rgba(54,34,32,0.06)] backdrop-blur-md xl:hidden" aria-label="Bottom navigation">
+    <a routerLink="/" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="text-[#6f1d35]" class="flex min-h-11 flex-col items-center justify-center gap-1 text-[9px] font-medium text-[#74635d]" aria-label="Home"><app-icon name="home" [size]="18" /><span>Home</span></a>
+    <a routerLink="/products" routerLinkActive="text-[#6f1d35]" class="flex min-h-11 flex-col items-center justify-center gap-1 text-[9px] font-medium text-[#74635d]" aria-label="Shop"><app-icon name="search" [size]="18" /><span>Shop</span></a>
+    <a routerLink="/viral-sarees" routerLinkActive="text-[#6f1d35]" class="flex min-h-11 flex-col items-center justify-center gap-1 text-[9px] font-medium text-[#74635d]" aria-label="Viral Sarees"><app-icon name="flame" [size]="18" /><span>Viral</span></a>
+    <a routerLink="/wishlist" routerLinkActive="text-[#6f1d35]" class="relative flex min-h-11 flex-col items-center justify-center gap-1 text-[9px] font-medium text-[#74635d]" aria-label="Wishlist"><app-icon name="heart" [size]="18" /><span>Saved</span>@if (state.wishlistCount()) { <span class="absolute right-2 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-[#6f1d35] px-1 text-[8px] text-white">{{ state.wishlistCount() }}</span> }</a>
+    <a routerLink="/cart" routerLinkActive="text-[#6f1d35]" class="relative flex min-h-11 flex-col items-center justify-center gap-1 text-[9px] font-medium text-[#74635d]" aria-label="Shopping bag"><app-icon name="bag" [size]="18" /><span>Bag</span>@if (state.cartCount()) { <span class="absolute right-2 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-[#6f1d35] px-1 text-[8px] text-white">{{ state.cartCount() }}</span> }</a>
+  </nav>

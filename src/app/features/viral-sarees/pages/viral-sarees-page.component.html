@@ -1,0 +1,59 @@
+<main class="relative h-[100dvh] overflow-hidden bg-[#171214] text-white">
+  <header class="pointer-events-none absolute inset-x-0 top-0 z-30 flex items-center justify-between bg-gradient-to-b from-black/70 to-transparent px-4 pb-8 pt-[max(1rem,env(safe-area-inset-top))] sm:px-6">
+    <a routerLink="/" class="pointer-events-auto inline-flex min-h-11 items-center gap-2 text-sm font-medium text-white" aria-label="Back to EshopingApp home">
+      <app-icon name="arrow-left" [size]="20" /> <span class="hidden sm:inline">Back to shop</span>
+    </a>
+    <div class="text-center">
+      <p class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#f0c178]"><app-icon name="flame" [size]="14" /> Viral sarees</p>
+      <p class="mt-1 text-[10px] text-white/70">{{ viralStore.activeIndex() + 1 }} / {{ viralStore.videos().length }}</p>
+    </div>
+    <a routerLink="/" fragment="featured" aria-label="Open shopping bag" class="pointer-events-auto relative grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white backdrop-blur-sm">
+      <app-icon name="bag" [size]="20" />
+      @if (storefrontState.cartCount()) {
+        <span class="absolute right-0 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-[#f0c178] px-1 text-[9px] font-bold text-[#351d20]">{{ storefrontState.cartCount() }}</span>
+      }
+    </a>
+  </header>
+
+  <app-viral-video-feed
+    class="block h-full"
+    [videos]="viralStore.videos()"
+    [activeIndex]="viralStore.activeIndex()"
+    [muted]="viralStore.isMuted()"
+    [isLiked]="viralStore.isLiked.bind(viralStore)"
+    (activeIndexChange)="viralStore.setActiveIndex($event)"
+    (muteToggle)="viralStore.toggleMute()"
+    (like)="viralStore.toggleLike($event)"
+    (share)="shareVideo($event)"
+    (details)="detailsVideo.set($event)"
+    (buy)="buyNow($event)"
+    (add)="viralStore.addToCart($event)"
+  />
+
+  @if (detailsVideo(); as video) {
+    <div class="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4" (click)="detailsVideo.set(null)">
+      <section role="dialog" aria-modal="true" [attr.aria-label]="video.productName + ' details'" class="relative w-full max-w-md overflow-hidden bg-[#fffdfa] text-[#302927] shadow-2xl" (click)="$event.stopPropagation()">
+        <button type="button" (click)="detailsVideo.set(null)" class="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center bg-white/95 text-[#302927]" aria-label="Close product details"><app-icon name="close" [size]="18" /></button>
+        <img [src]="video.thumbnailUrl" [alt]="video.productName" class="h-56 w-full object-cover" />
+        <div class="p-5 sm:p-6">
+          <p class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8d5b50]">Viral saree · Free delivery</p>
+          <h2 class="mt-2 font-display text-2xl">{{ video.productName }}</h2>
+          <p class="mt-2 text-sm leading-6 text-[#786a64]">{{ video.description }}</p>
+          <p class="mt-4 flex flex-wrap items-baseline gap-2">
+            <span class="text-lg font-semibold">{{ video.offerPrice | currency:'INR':'symbol':'1.0-0' }}</span>
+            <span class="text-sm text-[#9b8e88] line-through">{{ video.originalPrice | currency:'INR':'symbol':'1.0-0' }}</span>
+            <span class="text-xs font-bold text-[#6f1d35]">{{ video.discountPercentage }}% off</span>
+          </p>
+          <button type="button" (click)="viralStore.addToCart(video); detailsVideo.set(null)" class="mt-5 min-h-12 w-full bg-[#6f1d35] px-4 text-xs font-bold uppercase tracking-[0.13em] text-white hover:bg-[#542636]">Add to bag</button>
+        </div>
+      </section>
+    </div>
+  }
+
+  @if (storefrontState.toastMessage(); as message) {
+    <div class="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-[60] flex w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 items-center gap-2 border border-white/15 bg-[#251d1d]/95 px-4 py-3 text-xs text-white shadow-xl" role="status" aria-live="polite">
+      <app-icon name="check" [size]="17" class="text-[#f0c178]" /> <span>{{ message }}</span>
+      <button type="button" (click)="storefrontState.dismissToast()" class="ml-auto grid h-7 w-7 place-items-center" aria-label="Dismiss notification"><app-icon name="close" [size]="15" /></button>
+    </div>
+  }
+</main>

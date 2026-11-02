@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">EshopingApp</string>
+    <string name="title_activity_main">EshopingApp</string>
+    <string name="package_name">com.eshoping.app</string>
+    <string name="custom_url_scheme">com.eshoping.app</string>
+</resources>

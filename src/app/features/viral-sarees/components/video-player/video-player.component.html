@@ -1,0 +1,41 @@
+<div class="group relative h-full w-full overflow-hidden bg-[#1f1718]">
+  <img [src]="posterUrl" alt="" class="absolute inset-0 h-full w-full object-cover" [class.hidden]="!failed()" />
+  <video
+    #videoElement
+    [src]="videoUrl"
+    [poster]="posterUrl"
+    [muted]="muted"
+    [hidden]="failed()"
+    playsinline
+    preload="metadata"
+    class="absolute inset-0 h-full w-full cursor-pointer object-cover"
+    (click)="togglePlayback()"
+    (loadeddata)="setReady()"
+    (canplay)="setReady()"
+    (waiting)="loading.set(true)"
+    (timeupdate)="updateProgress($event)"
+    (ended)="playing.set(false)"
+    (error)="setFailed()"
+  ></video>
+
+  @if (loading() && active && !failed()) {
+    <div class="absolute inset-0 grid place-items-center bg-black/15" role="status" aria-label="Loading video">
+      <span class="h-9 w-9 animate-spin rounded-full border-2 border-white/35 border-t-white"></span>
+    </div>
+  }
+  @if (!playing() || failed()) {
+    <button type="button" (click)="togglePlayback()" class="absolute inset-0 grid place-items-center text-white" [attr.aria-label]="failed() ? 'Video unavailable; showing thumbnail' : 'Play video'">
+      <span class="grid h-14 w-14 place-items-center rounded-full border border-white/70 bg-black/30 backdrop-blur-sm">
+        <app-icon name="play" [size]="25" />
+      </span>
+    </button>
+  } @else {
+    <button type="button" (click)="togglePlayback()" class="absolute inset-0" aria-label="Pause video"></button>
+  }
+  <button type="button" (click)="$event.stopPropagation(); muteToggle.emit()" class="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/40 text-white backdrop-blur-sm" [attr.aria-label]="muted ? 'Unmute video' : 'Mute video'">
+    <span class="text-xs font-semibold">{{ muted ? 'MUTED' : 'SOUND' }}</span>
+  </button>
+  <div class="absolute inset-x-0 bottom-0 h-1 bg-white/25" aria-hidden="true">
+    <div class="h-full bg-[#f0c178] transition-[width] duration-150" [style.width.%]="progress()"></div>
+  </div>
+</div>

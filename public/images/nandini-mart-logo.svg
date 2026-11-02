@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768" role="img" aria-labelledby="logo-title logo-description">
+  <title id="logo-title">Nandini Mart</title>
+  <desc id="logo-description">A woman in a crimson saree over a golden N and lotus, with the Nandini Mart wordmark.</desc>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff1a7" />
+      <stop offset=".24" stop-color="#e4b84f" />
+      <stop offset=".5" stop-color="#fff0a0" />
+      <stop offset=".74" stop-color="#c58b2f" />
+      <stop offset="1" stop-color="#f6d875" />
+    </linearGradient>
+    <linearGradient id="gold-dark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6d875" />
+      <stop offset="1" stop-color="#9a601d" />
+    </linearGradient>
+    <linearGradient id="saree" x1=".2" y1="0" x2=".8" y2="1">
+      <stop offset="0" stop-color="#a90d17" />
+      <stop offset=".45" stop-color="#e22a28" />
+      <stop offset=".72" stop-color="#b40919" />
+      <stop offset="1" stop-color="#78101c" />
+    </linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0d3" />
+      <stop offset="1" stop-color="#d9a866" />
+    </linearGradient>
+    <filter id="soft-shadow" x="-.2" y="-.2" width="1.4" height="1.5">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
+      <feOffset dy="5" />
+      <feComponentTransfer><feFuncA type="linear" slope=".2" /></feComponentTransfer>
+      <feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge>
+    </filter>
+    <pattern id="floral-border" width="54" height="42" patternUnits="userSpaceOnUse">
+      <path d="M13 30c-7-7-5-13 0-15 5 2 7 8 0 15Zm0 0c7-7 5-13 0-15m0 15v7m-6-4h12" fill="none" stroke="#f8dc82" stroke-width="2" />
+      <circle cx="13" cy="15" r="2" fill="#fff0a0" />
+      <path d="M39 31c-5-5-4-10 0-12 4 2 5 7 0 12Zm0 0c5-5 4-10 0-12m0 12v6" fill="none" stroke="#f8dc82" stroke-width="1.6" />
+    </pattern>
+    <clipPath id="saree-clip">
+      <path d="M348 139c30-1 48 23 50 61 2 45-16 87-48 126-34 42-83 72-132 93-31 13-65 11-83-5-7-6-10-15-8-24 4-18 25-32 49-46 47-27 79-65 97-111 13-33 20-67 34-82 11-12 24-12 41-12Z" />
+    </clipPath>
+  </defs>
+
+  <g filter="url(#soft-shadow)">
+    <text x="388" y="448" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="420" font-weight="700" fill="url(#gold)" stroke="#9b681f" stroke-width="7" paint-order="stroke fill">N</text>
+    <path d="M263 512c39-43 83-61 126-53 48 8 92 31 130 58-38 17-80 25-127 22-50-3-93-11-129-27Z" fill="#b47925" opacity=".55" />
+  </g>
+
+  <g stroke="#75481c" stroke-linejoin="round">
+    <path d="M328 142c-12 17-14 40-12 63 2 22-4 42-21 59h103c-18-19-20-39-15-63 5-24-1-46-19-60Z" fill="#8d111c" stroke-width="5" />
+    <path d="M332 160c-7 19-4 39 5 58m42-57c4 19 1 36-8 54" fill="none" stroke="#e8b940" stroke-width="3" />
+    <path d="M319 147c-2-14 1-28 9-37 8-9 22-13 35-8 13 5 20 17 18 31-2 14-10 23-22 26-14 4-31-1-40-12Z" fill="url(#skin)" stroke-width="4" />
+    <path d="M318 123c-9-13-7-29 1-39 6-7 14-9 22-10 5-18 24-29 44-23 13 4 21 15 21 27 9 8 11 19 5 29-5 10-14 15-24 18-3-13-13-20-24-23-8 13-21 21-45 21Z" fill="#885316" stroke="#744714" stroke-width="4" />
+    <path d="M399 103c-2 10-7 17-14 22m-44 37c-5 14-4 28 1 42" fill="none" stroke="#75481c" stroke-width="3" />
+    <path d="M351 142c-18 8-33 26-37 49-5 25 3 48 23 62 22 13 52 13 73-3 15-12 23-29 22-48-2-25-14-47-34-60-8 19-26 30-47 34-1-12-1-22 0-34Z" fill="#f5e2c3" stroke-width="5" />
+    <path d="M352 143c13 3 27 12 35 25-10 20-22 36-36 45-12-17-15-40-13-59Z" fill="#6f1320" stroke-width="4" />
+    <path d="M344 148c-5 17-4 37 4 57" fill="none" stroke="#d7a640" stroke-width="3" />
+  </g>
+
+  <path d="M348 139c30-1 48 23 50 61 2 45-16 87-48 126-34 42-83 72-132 93-31 13-65 11-83-5-7-6-10-15-8-24 4-18 25-32 49-46 47-27 79-65 97-111 13-33 20-67 34-82 11-12 24-12 41-12Z" fill="url(#saree)" stroke="#6e1019" stroke-width="7" />
+  <path d="M343 151c15 31 6 76-13 116-21 45-59 83-101 111m141-213c18 41 6 93-19 139-22 40-55 71-91 96" fill="none" stroke="#f04a37" stroke-width="8" opacity=".65" />
+  <path d="M145 381c29 22 58 26 91 14 46-17 89-47 122-81-13 33-39 63-75 87-34 23-76 39-111 34-25-3-40-18-42-34-1-7 5-15 15-20Z" fill="url(#floral-border)" stroke="#f2cf66" stroke-width="5" clip-path="url(#saree-clip)" />
+  <path d="M137 392c17 20 40 29 66 27 48-3 111-43 155-87" fill="none" stroke="#f6d875" stroke-width="7" />
+  <path d="M365 176c13 41 8 82-8 117m-47 53c-28 25-57 43-87 55" fill="none" stroke="#8f0d19" stroke-width="5" opacity=".8" />
+
+  <g fill="url(#gold)" stroke="#9b681f" stroke-width="5" stroke-linejoin="round">
+    <path d="M384 509c-53-5-91-30-112-70 47 4 85 23 112 70Z" />
+    <path d="M384 509c-34-40-44-78-30-117 32 28 43 67 30 117Z" />
+    <path d="M384 509c-13-50-3-89 30-117 14 39 4 78-30 117Z" />
+    <path d="M384 509c28-47 65-66 112-70-21 40-59 65-112 70Z" />
+    <path d="M384 510c-73 1-133-18-178-56 67-8 126 11 178 56Z" />
+    <path d="M384 510c-91 21-165 15-222-18 70-26 145-20 222 18Z" />
+    <path d="M384 510c73 1 133-18 178-56-67-8-126 11-178 56Z" />
+    <path d="M384 510c91 21 165 15 222-18-70-26-145-20-222 18Z" />
+    <path d="M384 509c-35-1-61-14-79-40 34-4 60 9 79 40Z" />
+    <path d="M384 509c35-1 61-14 79-40-34-4-60 9-79 40Z" />
+    <path d="M384 482c-22-20-25-43 0-69 25 26 22 49 0 69Z" />
+    <path d="M193 494c119 37 263 37 382 0-39 34-100 49-191 48-91 1-152-14-191-48Z" />
+  </g>
+  <path d="M222 481c38 17 87 27 162 27s124-10 162-27M266 463c36 17 75 25 118 26m-86-45c20 18 42 30 68 36m136-17c-36 17-75 25-118 26m86-45c-20 18-42 30-68 36" fill="none" stroke="#fff0a0" stroke-width="3" opacity=".8" />
+
+  <text x="384" y="634" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="88" font-weight="700" letter-spacing="3" fill="url(#gold-dark)" stroke="#8d5b20" stroke-width="1.5" paint-order="stroke fill">NANDINI</text>
+  <text x="384" y="704" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" letter-spacing="7" fill="url(#gold-dark)">MART</text>
+  <path d="M216 728h108m120 0h108" stroke="#c09140" stroke-width="2" />
+  <text x="384" y="735" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="4" fill="#8d641f">YOUR DAILY STORE</text>
+</svg>

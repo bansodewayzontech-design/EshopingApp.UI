@@ -1,0 +1,25 @@
+<main class="grid min-h-screen bg-[#fffdfa] lg:grid-cols-[1fr_0.9fr]">
+  <aside class="relative hidden overflow-hidden bg-[#542636] p-12 text-white lg:flex lg:flex-col lg:justify-between">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1400&q=82')] bg-cover bg-center opacity-35"></div>
+    <a routerLink="/" class="relative font-display text-3xl" aria-label="EshopingApp home">Eshoping<span class="text-[#f0c178]">.</span></a>
+    <div class="relative max-w-lg"><p class="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f0c178]">Wear your story</p><p class="mt-3 font-display text-5xl leading-tight">Find the pieces you’ll keep close.</p><p class="mt-4 max-w-md text-sm leading-6 text-white/75">Sign in to keep your wishlist, address and order updates together.</p></div>
+    <p class="relative text-[10px] uppercase tracking-[0.14em] text-white/55">Thoughtfully chosen Indian fashion</p>
+  </aside>
+  <section class="grid place-items-center px-5 py-10 sm:px-8">
+    <div class="w-full max-w-md">
+      <a routerLink="/" class="font-display text-2xl text-[#542636] lg:hidden">Eshoping<span class="text-[#b17b3a]">.</span></a>
+      <p class="mt-8 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8d5b50]">Welcome back</p>
+      <h1 class="mt-2 font-display text-4xl text-[#302927]">Sign in</h1>
+      <p class="mt-2 text-sm text-[#786a64]">Use any valid email and password for this frontend demo.</p>
+      <form class="mt-7 space-y-4" (submit)="login($event)">
+        <label class="block text-xs font-semibold text-[#453c39]">Email address<input name="email" type="email" autocomplete="email" required class="mt-1.5 min-h-12 w-full border border-[#d9c9c1] px-3 text-sm outline-none focus:border-[#6f1d35]" /></label>
+        <label class="block text-xs font-semibold text-[#453c39]">Password<span class="relative mt-1.5 block"><input name="password" [attr.aria-label]="'Password'" [type]="showPassword() ? 'text' : 'password'" autocomplete="current-password" required minlength="6" class="min-h-12 w-full border border-[#d9c9c1] px-3 pr-14 text-sm outline-none focus:border-[#6f1d35]" /><button type="button" (click)="togglePasswordVisibility()" [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'" class="absolute inset-y-0 right-0 px-3 text-[10px] font-semibold uppercase tracking-wide text-[#6f1d35]">{{ showPassword() ? 'Hide' : 'Show' }}</button></span></label>
+        <div class="flex justify-end"><a routerLink="/auth/forgot-password" class="text-xs font-medium text-[#6f1d35] hover:underline">Forgot password?</a></div>
+        @if (errorMessage()) { <p class="text-xs text-[#8d263d]" role="alert">{{ errorMessage() }}</p> }
+        <button type="submit" class="min-h-12 w-full bg-[#6f1d35] px-4 text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#542636]">Sign in</button>
+      </form>
+      <p class="mt-6 text-center text-sm text-[#786a64]">New to EshopingApp? <a routerLink="/auth/register" class="font-semibold text-[#6f1d35] hover:underline">Create account</a></p>
+      <a routerLink="/" class="mt-8 inline-flex min-h-10 items-center gap-2 text-xs text-[#8c7770] hover:text-[#6f1d35]"><app-icon name="arrow-left" [size]="15" /> Back to shopping</a>
+    </div>
+  </section>
+</main>

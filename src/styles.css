@@ -1,1 +1,114 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+	scroll-behavior: smooth;
+	scroll-padding-top: 6rem;
+}
+
+body {
+	min-width: 320px;
+	margin: 0;
+	background: #fffdfa;
+	color: #302927;
+	font-family: 'DM Sans', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+@media (max-width: 1535px) {
+	body:has(.mobile-bottom-nav) {
+		padding-bottom: calc(3.75rem + env(safe-area-inset-bottom));
+	}
+}
+
+.mobile-bottom-nav {
+	padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.storefront-announcement {
+	padding-top: max(0.5rem, env(safe-area-inset-top));
+}
+
+::selection {
+	background: #eadbd3;
+	color: #4b1f2c;
+}
+
+.nav-link {
+	min-height: 40px;
+	color: #514642;
+	font-size: 11px;
+	font-weight: 500;
+	transition: color 160ms ease;
+}
+
+.nav-link:hover,
+.footer-link:hover {
+	color: #9b5965;
+}
+
+.mobile-nav-link {
+	min-height: 42px;
+	padding: 10px 0;
+	color: #514642;
+	font-size: 13px;
+}
+
+.section-title {
+	margin-top: 8px;
+	color: #302927;
+	font-family: 'Playfair Display', serif;
+	font-size: 1.75rem;
+	font-weight: 500;
+	line-height: 1.15;
+}
+
+@media (min-width: 1024px) {
+	.section-title {
+		font-size: 2.45rem;
+	}
+}
+
+.eyebrow {
+	color: #8d5b50;
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+
+.section-link {
+	display: inline-flex;
+	min-height: 36px;
+	align-items: center;
+	gap: 8px;
+	color: #6f1d35;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	transition: color 160ms ease;
+}
+
+.section-link:hover {
+	color: #a45a68;
+}
+
+.footer-link {
+	transition: color 160ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}

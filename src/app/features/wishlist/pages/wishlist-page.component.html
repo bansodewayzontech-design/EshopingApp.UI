@@ -1,0 +1,23 @@
+<app-storefront-header />
+<main class="min-h-screen bg-[#fffdfa] px-5 py-8 sm:px-8 sm:py-12">
+  <div class="mx-auto max-w-7xl">
+    <p class="eyebrow">Saved for a special moment</p>
+    <h1 class="section-title">Your wishlist <span class="font-sans text-sm font-normal text-[#8c7770]">({{ storefront.wishlistCount() }})</span></h1>
+
+    @if (storefront.wishlistProducts().length) {
+      <div class="mt-8 grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-5 sm:gap-y-12 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-6">
+        @for (product of storefront.wishlistProducts(); track product.id) {
+          <div class="relative">
+            <button type="button" (click)="storefront.removeFromWishlist(product.id)" [attr.aria-label]="'Remove ' + product.name + ' from wishlist'" class="absolute right-2 top-2 z-10 grid h-9 w-9 place-items-center border border-[#eee5df] bg-white/95 text-[#6f1d35] shadow-sm hover:bg-[#6f1d35] hover:text-white"><app-icon name="close" [size]="15" /></button>
+            <app-product-card [product]="product" (quickView)="openDetails($event)" />
+          </div>
+        }
+      </div>
+    } @else {
+      <section class="mt-8 grid min-h-[360px] place-items-center border border-dashed border-[#d9c9c1] bg-[#fbf8f4] px-5 py-12 text-center">
+        <div><span class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-[#f0e5df] text-[#6f1d35]"><app-icon name="heart" [size]="23" /></span><h2 class="mt-4 font-display text-2xl text-[#302927]">Keep the pieces you love close</h2><p class="mt-2 text-sm text-[#786a64]">Tap the heart on a saree to save it to your wishlist.</p><a routerLink="/products" class="mt-5 inline-flex min-h-11 items-center bg-[#6f1d35] px-5 text-xs font-semibold uppercase tracking-wide text-white">Browse sarees</a></div>
+      </section>
+    }
+  </div>
+</main>
+<app-storefront-footer />
