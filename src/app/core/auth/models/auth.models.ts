@@ -5,6 +5,12 @@ export interface SavedAddress {
   city: string;
   state: string;
   postalCode: string;
+  fullName?: string;
+  phone?: string;
+  email?: string;
+  house?: string;
+  street?: string;
+  landmark?: string;
 }
 
 export interface AuthUser {

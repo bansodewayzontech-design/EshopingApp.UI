@@ -29,6 +29,11 @@ export class ViralSareesService {
 		this.storefrontState.addToCart(this.toStorefrontProduct(video));
 	}
 
+	productForCheckout(productId: string): StorefrontProduct | null {
+		const video = this.videos().find((item) => item.productId === productId);
+		return video ? this.toStorefrontProduct(video) : null;
+	}
+
 	private toStorefrontProduct(video: ViralSareeVideo): StorefrontProduct {
 		return {
 			id: video.productId,

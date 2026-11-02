@@ -52,6 +52,16 @@
             <p class="mt-2 min-h-4 text-xs text-[#6f1d35]" aria-live="polite">{{ pinMessage() }}</p>
           </div>
 
+          <div class="mt-4 flex items-center gap-3">
+            <span class="text-xs font-semibold text-[#453c39]">Quantity</span>
+            <div class="inline-flex h-10 items-center border border-[#d9c9c1]">
+              <button type="button" (click)="decreaseQuantity()" aria-label="Decrease quantity" class="grid h-10 w-10 place-items-center text-[#542636] hover:bg-[#f7f2ed]"><app-icon name="minus" [size]="14" /></button>
+              <span class="min-w-8 text-center text-xs font-semibold" aria-live="polite">{{ quantity() }}</span>
+              <button type="button" (click)="increaseQuantity()" aria-label="Increase quantity" class="grid h-10 w-10 place-items-center text-[#542636] hover:bg-[#f7f2ed]"><app-icon name="plus" [size]="14" /></button>
+            </div>
+            <span class="text-[10px] text-[#8c7770]">Up to 20 per order</span>
+          </div>
+
           <div class="mt-4 grid gap-2 sm:grid-cols-2">
             <button type="button" (click)="addToCart(item)" class="min-h-12 border border-[#6f1d35] px-4 text-xs font-bold uppercase tracking-[0.12em] text-[#6f1d35] transition hover:bg-[#f8f2ed]">Add to bag</button>
             <button type="button" (click)="buyNow(item)" class="min-h-12 bg-[#6f1d35] px-4 text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:bg-[#542636]">Buy now</button>

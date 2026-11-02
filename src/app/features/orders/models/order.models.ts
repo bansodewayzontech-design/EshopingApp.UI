@@ -10,6 +10,10 @@ export interface OrderAddress {
   city: string;
   state: string;
   postalCode: string;
+  email?: string;
+  house?: string;
+  street?: string;
+  landmark?: string;
 }
 
 export interface StoreOrder {

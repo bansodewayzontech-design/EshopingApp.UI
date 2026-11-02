@@ -32,6 +32,25 @@ export class AuthService {
     return { success: true, message: 'You are signed in.' };
   }
 
+  loginWithMobile(phoneValue: string): AuthResult {
+    const phone = phoneValue.replace(/\D/g, '');
+    if (!/^\d{10}$/.test(phone)) return { success: false, message: 'Enter a valid 10-digit mobile number.' };
+    const savedUser = this.readUser();
+    const user = savedUser?.phone === phone
+      ? savedUser
+      : {
+          id: `mobile-${Date.now()}`,
+          fullName: 'Shopper',
+          email: `${phone}@mobile.eshoping.demo`,
+          phone,
+          addresses: []
+        };
+    this.persistUser(user);
+    this.tokenService.setToken(`demo-mobile-${Date.now()}`);
+    this.currentUser.set(user);
+    return { success: true, message: 'Mobile number verified for this demo.' };
+  }
+
   register(fullName: string, emailValue: string, phone: string): AuthResult {
     const email = emailValue.trim().toLowerCase();
     if (!fullName.trim() || !email || !phone.trim()) {
@@ -75,6 +94,17 @@ export class AuthService {
     const user = this.currentUser();
     if (!user) return;
     const next = { ...user, addresses: user.addresses.filter((address) => address.id !== addressId) };
+    this.persistUser(next);
+    this.currentUser.set(next);
+  }
+
+  updateAddress(addressId: string, updates: Omit<SavedAddress, 'id'>): void {
+    const user = this.currentUser();
+    if (!user) return;
+    const next = {
+      ...user,
+      addresses: user.addresses.map((address) => address.id === addressId ? { ...address, ...updates } : address)
+    };
     this.persistUser(next);
     this.currentUser.set(next);
   }

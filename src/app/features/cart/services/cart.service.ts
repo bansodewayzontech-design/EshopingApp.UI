@@ -13,11 +13,7 @@ export class CartService {
   readonly coupon = signal<CartCoupon | null>(null);
   readonly couponMessage = signal('');
   readonly couponDiscount = computed(() => {
-    const active = this.coupon();
-    if (!active) return 0;
-    const subtotal = this.storefront.cartSubtotal();
-    const amount = active.kind === 'percentage' ? subtotal * active.value / 100 : active.value;
-    return Math.min(subtotal, Math.round(amount));
+    return this.couponDiscountFor(this.storefront.cartSubtotal());
   });
   readonly orderTotal = computed(() => Math.max(0, this.storefront.cartSubtotal() + this.storefront.deliveryFee() - this.couponDiscount()));
 
@@ -34,6 +30,13 @@ export class CartService {
       return;
     }
     this.couponMessage.set('That coupon is not valid. Try SAREE10 or FESTIVE500.');
+  }
+
+  couponDiscountFor(subtotal: number): number {
+    const active = this.coupon();
+    if (!active) return 0;
+    const amount = active.kind === 'percentage' ? subtotal * active.value / 100 : active.value;
+    return Math.min(subtotal, Math.round(amount));
   }
 
   clearCoupon(): void {

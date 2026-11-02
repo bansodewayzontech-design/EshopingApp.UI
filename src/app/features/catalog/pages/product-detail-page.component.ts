@@ -32,6 +32,7 @@ export class ProductDetailPageComponent {
     return product && selection.productId === product.id ? selection.index : 0;
   });
   readonly selectedImage = computed(() => this.product()?.images[this.selectedImageIndex()] ?? this.product()?.image ?? '');
+  readonly quantity = signal(1);
   readonly pinCode = signal('');
   readonly pinMessage = signal('');
   readonly sampleStars = [1, 2, 3, 4, 5];
@@ -62,12 +63,21 @@ export class ProductDetailPageComponent {
   }
 
   addToCart(product: CatalogProduct): void {
-    this.storefront.addToCart(product);
+    this.storefront.addToCart(product, this.quantity());
   }
 
   buyNow(product: CatalogProduct): void {
-    this.storefront.addToCart(product);
-    this.storefront.notify('Added to your bag. Checkout is coming in the next phase.');
+    void this.router.navigate(['/checkout'], {
+      queryParams: { mode: 'buy-now', productId: product.id, quantity: this.quantity() }
+    });
+  }
+
+  decreaseQuantity(): void {
+    this.quantity.update((quantity) => Math.max(1, quantity - 1));
+  }
+
+  increaseQuantity(): void {
+    this.quantity.update((quantity) => Math.min(20, quantity + 1));
   }
 
   openSimilarProduct(product: StorefrontProduct): void {

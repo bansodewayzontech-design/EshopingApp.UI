@@ -1,6 +1,6 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IconComponent } from '../../../shared/components/icon/icon.component';
 import { StorefrontStateService } from '../../home/services/storefront-state.service';
 import { ViralVideoFeedComponent } from '../components/viral-video-feed/viral-video-feed.component';
@@ -17,6 +17,7 @@ export class ViralSareesPageComponent {
   readonly viralStore = inject(ViralSareesService);
   readonly storefrontState = inject(StorefrontStateService);
   readonly detailsVideo = signal<ViralSareeVideo | null>(null);
+  private readonly router = inject(Router);
 
   constructor() {
     const requestedVideoId = inject(ActivatedRoute).snapshot.queryParamMap.get('video');
@@ -42,7 +43,9 @@ export class ViralSareesPageComponent {
   }
 
   buyNow(video: ViralSareeVideo): void {
-    this.detailsVideo.set(video);
+    void this.router.navigate(['/checkout'], {
+      queryParams: { mode: 'buy-now', productId: video.productId, quantity: 1 }
+    });
   }
 
   @HostListener('document:keydown.escape')

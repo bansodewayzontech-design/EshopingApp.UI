@@ -18,12 +18,13 @@ export class StorefrontStateService {
 
   private toastTimer: ReturnType<typeof setTimeout> | null = null;
 
-  addToCart(product: StorefrontProduct): void {
+  addToCart(product: StorefrontProduct, quantity = 1): void {
+    const itemQuantity = Math.min(20, Math.max(1, Math.floor(quantity)));
     this.cartItems.update((items) => {
       const existing = items.find((item) => item.product.id === product.id);
       const next = existing
-        ? items.map((item) => item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)
-        : [...items, { product, quantity: 1 }];
+        ? items.map((item) => item.product.id === product.id ? { ...item, quantity: item.quantity + itemQuantity } : item)
+        : [...items, { product, quantity: itemQuantity }];
       this.writeStorage(CART_STORAGE_KEY, next);
       return next;
     });
